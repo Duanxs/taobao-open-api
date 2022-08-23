@@ -68,5 +68,9 @@
     "unbuild": "^0.8.8",
     "vite": "^3.0.7",
     "vitest": "^0.22.0"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "form-data": "^4.0.0"
   }
 }
