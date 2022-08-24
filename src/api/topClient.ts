@@ -1,11 +1,11 @@
-import type { AxiosInstance, AxiosRequestConfig, AxiosRequestHeaders, Method } from 'axios'
+import type { AxiosInstance, AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse, Method } from 'axios'
 import FormData from 'form-data'
 import { YYYYMMDDHHmmss, isObject, md5 } from '../utils/topUtil'
 import { initAxios } from '../utils/request'
 
 interface TopClientOptions extends AxiosRequestConfig {
-  appkey: string
-  appsecret: string
+  appKey: string
+  appSecret: string
 }
 
 interface RequestParams {
@@ -55,28 +55,28 @@ interface RequestParams {
  * 淘宝开发平台
  */
 export class TopClient {
-  appKey: string
-  appSecret: string
-  axios: AxiosInstance
+  private appKey: string
+  private appSecret: string
+  private axios: AxiosInstance
 
   constructor(options: TopClientOptions) {
-    this.appKey = options.appkey
-    this.appSecret = options.appsecret
+    this.appKey = options.appKey
+    this.appSecret = options.appSecret
 
     this.axios = initAxios({
       baseURL: options.baseURL,
     })
   }
 
-  private invoke(type: Method, method: string, params: RequestParams, httpHeaders?: AxiosRequestHeaders) {
+  private invoke<T = any, D = any>(type: Method, method: string, params: RequestParams, httpHeaders?: AxiosRequestHeaders) {
     params.method = method
-    return this.request(type, params, httpHeaders || {})
+    return this.request<T, D>(type, params, httpHeaders || {})
   }
 
   /**
    * Request API.
    */
-  private request(type: Method, params: any, _httpHeaders: AxiosRequestHeaders) {
+  private request<T = any, D = any>(type: Method, params: any, _httpHeaders: AxiosRequestHeaders): Promise<AxiosResponse<T, D>> {
     // @ts-expect-error 紧接着赋值
     const args: RequestParams = {
       timestamp: this.timestamp(),
@@ -99,7 +99,7 @@ export class TopClient {
 
     if (type === 'get') { return this.axios.get('') }
     else {
-      return this.axios.post('', form, {
+      return this.axios.post<T>('', form, {
         headers: {
           'Content-Type': `multipart/form-data; boundary=${form.getBoundary()}`,
         },
@@ -110,22 +110,22 @@ export class TopClient {
   /**
    * POST
    */
-  execute(api: string, params: any) {
-    return this.invoke('post', api, params)
+  execute<T = any, D = any>(api: string, params: any) {
+    return this.invoke<T, D>('post', api, params)
   }
 
   /**
    * POST，带头
    */
-  executeWithHeader(api: string, params: any, httpHeaders: AxiosRequestHeaders) {
-    return this.invoke('post', api, params, httpHeaders || {})
+  executeWithHeader<T = any, D = any>(api: string, params: any, httpHeaders: AxiosRequestHeaders) {
+    return this.invoke<T, D>('post', api, params, httpHeaders || {})
   }
 
   /**
    * GET
    */
-  get(api: string, params: any) {
-    return this.invoke('get', api, params)
+  get<T = any, D = any>(api: string, params: any) {
+    return this.invoke<T, D>('get', api, params)
   }
 
   /**

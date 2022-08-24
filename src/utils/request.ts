@@ -15,9 +15,11 @@ export function initAxios(options: AxiosRequestConfig) {
 
   instance.interceptors.response.use((response) => {
     const { data } = response
-    return data[Object.keys(data)[0]]
+    const undress = data[Object.keys(data)[0]]
+    const truthKey = Object.keys(undress).find(key => key !== 'request_id')
+    const truthData = truthKey && undress[truthKey]
+    return JSON.parse(truthData || '{}')
   }, (error) => {
-    // console.log('instance.interceptors.response.use ~ error', error)
     // TODO: 响应错误处理
     throw error
   })
