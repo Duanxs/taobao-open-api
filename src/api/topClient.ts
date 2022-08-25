@@ -1,4 +1,4 @@
-import type { AxiosInstance, AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse, Method } from 'axios'
+import type { AxiosInstance, AxiosRequestConfig, AxiosRequestHeaders, Method } from 'axios'
 import FormData from 'form-data'
 import { YYYYMMDDHHmmss, isObject, md5 } from '../utils/topUtil'
 import { initAxios } from '../utils/request'
@@ -68,15 +68,15 @@ export class TopClient {
     })
   }
 
-  private invoke<T = any, D = any>(type: Method, method: string, params: RequestParams, httpHeaders?: AxiosRequestHeaders) {
+  private invoke<T = any>(type: Method, method: string, params: RequestParams, httpHeaders?: AxiosRequestHeaders) {
     params.method = method
-    return this.request<T, D>(type, params, httpHeaders || {})
+    return this.request<T>(type, params, httpHeaders || {})
   }
 
   /**
    * Request API.
    */
-  private request<T = any, D = any>(type: Method, params: any, _httpHeaders: AxiosRequestHeaders): Promise<AxiosResponse<T, D>> {
+  private request<T = any>(type: Method, params: any, _httpHeaders: AxiosRequestHeaders) {
     // @ts-expect-error 紧接着赋值
     const args: RequestParams = {
       timestamp: this.timestamp(),
@@ -97,7 +97,7 @@ export class TopClient {
     const form = new FormData()
     Object.keys(args).forEach(key => form.append(key, args[key]))
 
-    if (type === 'get') { return this.axios.get('') }
+    if (type === 'get') { return this.axios.get<T>('') }
     else {
       return this.axios.post<T>('', form, {
         headers: {
@@ -110,22 +110,22 @@ export class TopClient {
   /**
    * POST
    */
-  execute<T = any, D = any>(api: string, params: any) {
-    return this.invoke<T, D>('post', api, params)
+  execute<T = any>(api: string, params: any) {
+    return this.invoke<T>('post', api, params)
   }
 
   /**
    * POST，带头
    */
-  executeWithHeader<T = any, D = any>(api: string, params: any, httpHeaders: AxiosRequestHeaders) {
-    return this.invoke<T, D>('post', api, params, httpHeaders || {})
+  executeWithHeader<T = any>(api: string, params: any, httpHeaders: AxiosRequestHeaders) {
+    return this.invoke<T>('post', api, params, httpHeaders || {})
   }
 
   /**
    * GET
    */
-  get<T = any, D = any>(api: string, params: any) {
-    return this.invoke<T, D>('get', api, params)
+  get<T = any>(api: string, params: any) {
+    return this.invoke<T>('get', api, params)
   }
 
   /**

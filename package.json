@@ -6,12 +6,12 @@
   "description": "淘宝接口 | Taobao Open API",
   "author": "Duanxs <dxs@duanxs.com>",
   "license": "MIT",
-  "homepage": "https://github.com/duanxs/taobao#readme",
+  "homepage": "https://github.com/duanxs/taobao-open-api#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/duanxs/taobao.git"
+    "url": "git+https://github.com/duanxs/taobao-open-api.git"
   },
-  "bugs": "https://github.com/duanxs/taobao/issues",
+  "bugs": "https://github.com/duanxs/taobao-open-api/issues",
   "keywords": [
     "淘宝",
     "淘宝客",
@@ -54,6 +54,10 @@
     "test": "vitest",
     "typecheck": "tsc --noEmit"
   },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "form-data": "^4.0.0"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^0.26.1",
     "@antfu/ni": "^0.17.2",
@@ -68,9 +72,5 @@
     "unbuild": "^0.8.8",
     "vite": "^3.0.7",
     "vitest": "^0.22.0"
-  },
-  "dependencies": {
-    "axios": "^0.27.2",
-    "form-data": "^4.0.0"
   }
 }
