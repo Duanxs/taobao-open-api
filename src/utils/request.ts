@@ -16,9 +16,6 @@ export function initAxios(options: AxiosRequestConfig) {
   instance.interceptors.response.use((response) => {
     const { data } = response
     const undress = data[Object.keys(data)[0]]
-    // const truthKey = Object.keys(undress).find(key => key !== 'request_id')
-    // const truthData = truthKey && undress[truthKey]
-    // return JSON.parse(truthData || '{}')
     return undress
   }, (error) => {
     // TODO: 响应错误处理

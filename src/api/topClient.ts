@@ -99,7 +99,7 @@ export class TopClient {
 
     if (type === 'get') { return this.axios.get<T>('') }
     else {
-      return this.axios.post<T>('', form, {
+      return this.axios.post<T, T>('', form, {
         headers: {
           'Content-Type': `multipart/form-data; boundary=${form.getBoundary()}`,
         },
