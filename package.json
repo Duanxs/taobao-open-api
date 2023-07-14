@@ -1,7 +1,7 @@
 {
   "name": "@duanxs/taobao",
   "type": "module",
-  "version": "0.0.1-beta.4",
+  "version": "0.0.1-beta.5",
   "packageManager": "pnpm@8.6.7",
   "description": "淘宝接口 | Taobao Open API",
   "author": "Duanxs <dxs@duanxs.com>",
