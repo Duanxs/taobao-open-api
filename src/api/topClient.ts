@@ -97,7 +97,9 @@ export class TopClient {
     const form = new FormData()
     Object.keys(args).forEach(key => form.append(key, args[key]))
 
-    if (type === 'get') { return this.axios.get<T, T>('') }
+    if (type === 'get') {
+      return this.axios.get<T, T>('')
+    }
     else {
       return this.axios.post<T, T>('', form, {
         headers: {
