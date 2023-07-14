@@ -1,11 +1,11 @@
-import type { BinaryToTextEncoding } from 'crypto'
-import crypto from 'crypto'
-import os from 'os'
+import type { BinaryToTextEncoding } from 'node:crypto'
+import crypto from 'node:crypto'
+import os from 'node:os'
 
 /**
  * hash
  */
-export const hash = function hash(method: string, s: string, format?: BinaryToTextEncoding): string {
+export function hash(method: string, s: string, format?: BinaryToTextEncoding): string {
   const sum = crypto.createHash(method)
   sum.update(s, 'utf8')
   return sum.digest(format || 'hex')
@@ -14,7 +14,7 @@ export const hash = function hash(method: string, s: string, format?: BinaryToTe
 /**
  * md5 hash
  */
-export const md5 = function md5(s: string, format?: BinaryToTextEncoding): string {
+export function md5(s: string, format?: BinaryToTextEncoding): string {
   return hash('md5', s, format)
 }
 
@@ -25,7 +25,7 @@ interface DataOptions {
   timeSep: string
 }
 
-export const YYYYMMDDHHmmss = function (d?: Date | number | string, options?: DataOptions): string {
+export function YYYYMMDDHHmmss(d?: Date | number | string, options?: DataOptions): string {
   d = d || new Date()
   if (!(d instanceof Date))
     d = new Date(d)
@@ -59,11 +59,10 @@ export const YYYYMMDDHHmmss = function (d?: Date | number | string, options?: Da
   if (seconds < 10)
     seconds = `0${seconds}`
 
-  return `${d.getFullYear() + dateSep + month + dateSep + date} ${
-        hours}${timeSep}${mintues}${timeSep}${seconds}`
+  return `${d.getFullYear() + dateSep + month + dateSep + date} ${hours}${timeSep}${mintues}${timeSep}${seconds}`
 }
 
-export const getLocalIPAdress = function () {
+export function getLocalIPAdress() {
   const interfaces = os.networkInterfaces()
   for (const devName in interfaces) {
     const iface = interfaces[devName] || []
@@ -75,21 +74,20 @@ export const getLocalIPAdress = function () {
   }
 }
 
-export const hasOwn = (obj: any, key: PropertyKey) => {
+export function hasOwn(obj: any, key: PropertyKey) {
   return Object.prototype.hasOwnProperty.call(obj, key)
 }
 
-export function isObject(obj: any): boolean {
+export function isObject(obj: any) {
   return obj !== null && typeof obj === 'object'
 }
 
 export const isArray = Array.isArray
 
-export function isFunction(value: any): value is (...args: any[]) => any {
+export function isFunction(value: any) {
   return typeof value === 'function'
 }
 
-export function isString(value: any): boolean {
+export function isString(value: any) {
   return typeof value === 'string'
 }
-
